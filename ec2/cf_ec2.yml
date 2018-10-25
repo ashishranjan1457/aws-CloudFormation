@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: EC2 t2.micro public
+Resources:
+  MyEC2Instance: #An inline comment
+    Type: "AWS::EC2::Instance"
+    Properties: 
+      ImageId: "ami-0d773a3b7bb2bb1c1" #Another comment -- This is a Linux AMI
+      InstanceType: t2.micro
+      KeyName: ec2keypair
+      SecurityGroups: 
+        - my-ec2-sec-group
+      BlockDeviceMappings:
+        -
+          DeviceName: /dev/sda1
+          Ebs:
+            VolumeType: io1
+            Iops: 100
+            DeleteOnTermination: false
+            VolumeSize: 8
+      UserData:
+        Fn::Base64:
+          Fn::Join:
+            - ""
+            -
+              - "#!/bin/bash -ex"
+              - "\n"
+              - "perl -pi -e 's/^#?Port 22$/Port 443/' /etc/ssh/sshd_config"
+              - "\n"
+              - "service sshd restart || service ssh restart"
+      Tags: 
+        - 
+          Key: "Name"
+          Value: "CloudFormation_test"
