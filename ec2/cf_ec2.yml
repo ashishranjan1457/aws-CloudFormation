@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: EC2 t2.micro public
 Resources:
-  MyEC2Instance: #An inline comment
+  MyEC2Instance:
     Type: "AWS::EC2::Instance"
     Properties: 
-      ImageId: "ami-0d773a3b7bb2bb1c1" #Another comment -- This is a Linux AMI
+      ImageId: "ami-0d773a3b7bb2bb1c1"
       InstanceType: t2.micro
       KeyName: ec2keypair
       SecurityGroups: 
